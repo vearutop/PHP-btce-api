@@ -9,6 +9,9 @@ class BTCeAPI {
     
     const DIRECTION_BUY = 'buy';
     const DIRECTION_SELL = 'sell';
+    const ORDER_DESC = 'DESC';
+    const ORDER_ASC = 'ASC';
+
     protected $public_api = 'https://btc-e.com/api/2/';
     
     protected $api_key;
@@ -150,7 +153,87 @@ class BTCeAPI {
             throw new BTCeAPIInvalidParameterException('Expected constant from '.__CLASS__.'::DIRECTION_BUY or '.__CLASS__.'::DIRECTION_SELL. Found: '.$direction);
         }
     }
-    
+
+
+    public function getInfo() {
+        $data = $this->apiQuery("getInfo");
+        return $data;
+    }
+
+
+    public function transHistory($offset = 0, $count = 1000, $fromId = 0, $endId = null, $order = self::ORDER_DESC, $sinceUt = 0, $endUt = null) {
+        $params = array(
+            'from' => $offset,
+            'count' => $count,
+            'from_id' => $fromId,
+            'end_id' => $endId,
+            'order' => $order,
+            'since' => $sinceUt,
+            'end' => $endUt
+        );
+        foreach ($params as $k => $v) {
+            if (null === $v) {
+                unset($params[$k]);
+            }
+        }
+
+        $data = $this->apiQuery("TransHistory", $params);
+        return $data;
+    }
+
+
+    public function tradeHistory($offset = 0, $count = 1000, $fromId = 0, $endId = null, $order = self::ORDER_DESC, $sinceUt = 0, $endUt = null, $pair = null) {
+        $params = array(
+            'from' => $offset,
+            'count' => $count,
+            'from_id' => $fromId,
+            'end_id' => $endId,
+            'order' => $order,
+            'since' => $sinceUt,
+            'end' => $endUt,
+            'pair' => $pair
+        );
+        foreach ($params as $k => $v) {
+            if (null === $v) {
+                unset($params[$k]);
+            }
+        }
+
+        $data = $this->apiQuery("TradeHistory", $params);
+        return $data;
+    }
+
+
+    public function activeOrders($pair = null) {
+        $params = array(
+            'pair' => $pair
+        );
+        foreach ($params as $k => $v) {
+            if (null === $v) {
+                unset($params[$k]);
+            }
+        }
+
+        $data = $this->apiQuery("ActiveOrders", $params);
+        return $data;
+    }
+
+    public function cancelOrder($orderId) {
+        $params = array(
+            'order_id' => $orderId
+        );
+        foreach ($params as $k => $v) {
+            if (null === $v) {
+                unset($params[$k]);
+            }
+        }
+
+        $data = $this->apiQuery("CancelOrder", $params);
+        return $data;
+    }
+
+
+
     /**
      * Check an order that is complete (non-active)
      * @param type $orderID
@@ -207,6 +290,7 @@ class BTCeAPI {
     public function getPairDepth($pair) {
         return $this->retrieveJSON($this->public_api.$pair."/depth");
     }
+
 }
 
 /**
