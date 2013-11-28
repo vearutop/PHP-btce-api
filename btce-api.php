@@ -12,6 +12,29 @@ class BTCeAPI {
     const ORDER_DESC = 'DESC';
     const ORDER_ASC = 'ASC';
 
+    const PAIR_BTC_USD = 'btc_usd';
+    const PAIR_BTC_RUR = 'btc_rur';
+    const PAIR_BTC_EUR = 'btc_eur';
+
+    const PAIR_LTC_USD = 'ltc_usd';
+    const PAIR_LTC_RUR = 'ltc_rur';
+    const PAIR_LTC_EUR = 'ltc_eur';
+
+    const PAIR_NMC_BTC = 'nmc_btc';
+    const PAIR_NMC_USD = 'nmc_usd';
+
+    const PAIR_NVC_BTC = 'nvc_btc';
+    const PAIR_NVC_USD = 'nvc_usd';
+
+    const PAIR_USD_RUR = 'usd_rur';
+    const PAIR_EUR_USD = 'eur_usd';
+
+    const PAIR_TRC_BTC = 'trc_btc';
+    const PAIR_PPC_BTC = 'ppc_btc';
+    const PAIR_FTC_BTC = 'ftc_btc';
+    const PAIR_XPM_BTC = 'xpm_btc';
+
+
     protected $public_api = 'https://btc-e.com/api/2/';
     
     protected $api_key;
