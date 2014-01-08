@@ -183,6 +183,15 @@ class BTCeAPI {
         return $data;
     }
 
+    public function getInfoData() {
+        $info = $this->getInfo();
+        if ($info['success'] === 1) {
+            return $info['return'];
+        } else {
+            throw new BTCeAPIFailureException($info['error']);
+        }
+    }
+
 
     public function transHistory($offset = 0, $count = 1000, $fromId = 0, $endId = null, $order = self::ORDER_DESC, $sinceUt = 0, $endUt = null) {
         $params = array(
